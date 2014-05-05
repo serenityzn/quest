@@ -7,6 +7,7 @@ class Bot
 	 @blk = Array.new
 	 @route = 1 # right = 1 left = 2 up = 3 down = 4
 	 @direction = [@step,0]
+	 @moveangle = 90
 
 	end
 
@@ -38,6 +39,9 @@ class Bot
 	end
 	
 	def walk(x,y)
+          ang = get_angle2(@direction)
+	  @moveangle = @moveangle+ang
+	  @moveangle %= 360
 	 if check_fov1(x,y,90) == 1
 	  @direction=chg_dir(x,y)
 	 end
@@ -58,7 +62,7 @@ class Bot
 	end
 
 	def draw
-	 @image.draw_rot(@x, @y, 1, 0)
+	 @image.draw_rot(@x, @y, 1, @moveangle)
 	end
 	
 	def vpr(x,y)
@@ -66,28 +70,39 @@ class Bot
 	 return res
 	end
 
-	def check_fov1(x,y,angle)
-	 v = [x-@x, y-@y]
-	 dir = @direction
+	def get_angle2(dir)
+	 v = [1, 0]
 	 vn = v_norm(v)
 	 dn = v_norm(dir)
-	 print "BOT = ["+@x.to_s+","+@y.to_s+"]\n"
-	 print "PL = ["+x.to_s+","+y.to_s+"]\n"
-	 print "Direction = ["+@direction[0].to_s+","+@direction[1].to_s+"]\n"
-	 print "Vektor naprvl norm =["+vn[0].to_s+","+vn[1].to_s+"]\n"
-	 print "Vektor obzora norm =["+dn[0].to_s+","+dn[1].to_s+"]\n"
 	 pro = vpr(vn,dn)
-	 print "Proizvedenie = "+pro.to_s+"\n"
-	 if pro>1 
-	  pro=1 
-	 end
-	 if pro<-1 
-	  pro=-1 
-	 end
+         if pro>1
+          pro=1
+         end
+         if pro<-1
+          pro=-1
+         end
 
-	 bangle = Math.acos(pro)*180/3.14159
-	 print "angle="+bangle.to_s+"\n\n"
-	 if bangle > angle/2
+         return angle = Math.acos(pro)*180/3.14159
+	end
+
+	def get_angle(x,y,bx,by,dir)
+	 v = [x-bx, y-by]
+         vn = v_norm(v)
+         dn = v_norm(dir)
+         pro = vpr(vn,dn)
+         if pro>1
+          pro=1
+         end
+         if pro<-1
+          pro=-1
+         end
+
+         return angle = Math.acos(pro)*180/3.14159
+	end
+	
+	def check_fov1(x,y,angle)
+	 @bangle = get_angle(x,y,@x,@y,@direction)
+	 if @bangle > angle/2
 	  res =0
 	 else
 	  res =1
@@ -101,6 +116,8 @@ class Bot
 	 res = dtopl[0]*@direction[0]+dtopl[1]*@direction[1]
 	 if res > 0
 	   see = 1
+	   @moveangle = @moveangle+@bangle
+	   @moveangle %= 360
 	 else
 	   see = 0
 	 end
