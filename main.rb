@@ -1,8 +1,8 @@
 require 'rubygems'
 require 'gosu'
-require 'player.rb'
-require 'level.rb'
-require 'bot.rb'
+require './player.rb'
+require './level.rb'
+require './bot.rb'
 
 class GameWindow < Gosu::Window
 	def initialize
