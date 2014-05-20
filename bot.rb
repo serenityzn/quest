@@ -1,13 +1,13 @@
 class Bot
 	def initialize(window)
-	 @image = Gosu::Image.new(window, "imgs/bot.png", false)
+	 @image = Gosu::Image.new(window, "imgs/bot1.png", false)
 	 @x = @y = @vel_y = @vel_x = @angle = 0.0
 	 @score = 0
 	 @step = 1
 	 @blk = Array.new
 	 @route = 1 # right = 1 left = 2 up = 3 down = 4
 	 @direction = [@step,0]
-	 @moveangle = 90
+	 @moveangle = 0
 
 	end
 
@@ -39,9 +39,13 @@ class Bot
 	end
 	
 	def walk(x,y)
-          ang = get_angle2(@direction)
-	  @moveangle = @moveangle+ang
-	  @moveangle %= 360
+	  if @direction[1]<0
+	    ang = get_angle2(@direction,-1,0)+180
+	  else
+	    ang = get_angle2(@direction,1,0)
+	  end
+	  @moveangle = ang
+#	  @moveangle %= 360
 	 if check_fov1(x,y,90) == 1
 	  @direction=chg_dir(x,y)
 	 end
@@ -59,6 +63,7 @@ class Bot
 #	 print "BotCoord=["+@x.to_s+","+@y.to_s+"]\n"
 #	 print "BotDirection=["+@direction[0].to_s+","+@direction[1].to_s+"\n"
 #	 print "DIR RESULT == [ "+check_fov(x, y).to_s+"]\n"
+	 print "MoveAngle="+@moveangle.to_s+"\n Direction="+@direction.to_s+"\n"
 	end
 
 	def draw
@@ -70,8 +75,8 @@ class Bot
 	 return res
 	end
 
-	def get_angle2(dir)
-	 v = [1, 0]
+	def get_angle2(dir,xx, yy)
+	 v = [xx,yy]
 	 vn = v_norm(v)
 	 dn = v_norm(dir)
 	 pro = vpr(vn,dn)

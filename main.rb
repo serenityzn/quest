@@ -29,21 +29,25 @@ class GameWindow < Gosu::Window
 	 if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft then
 	   @pl.turn_left
 	   @pl.showxy
+	   @bot.showxy(1,1)
 	 end
 	 
 	 if button_down? Gosu::KbRight or button_down? Gosu::GpRight then
 	   @pl.turn_right
 	   @pl.showxy
+	   @bot.showxy(1,1)
 	 end
 	 
 	 if button_down? Gosu::KbUp or button_down? Gosu::GpUp then
 	   @pl.turn_up
 	   @pl.showxy
+	   @bot.showxy(1,1)
 	 end
 	 
 	 if button_down? Gosu::KbDown or button_down? Gosu::GpDown then
 	   @pl.turn_down
 	   @pl.showxy
+	   @bot.showxy(1,1)
 	 end
 
 	 @pl.move
