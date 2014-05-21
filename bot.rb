@@ -46,7 +46,7 @@ class Bot
 	  end
 	  @moveangle = ang
 #	  @moveangle %= 360
-	 if check_fov1(x,y,90) == 1
+	 if (check_fov1(x,y,90) == 1 and block_fov(x,y) == 1)
 	  @direction=chg_dir(x,y)
 	 end
 		if check(@direction[0],0) == 0
@@ -55,6 +55,30 @@ class Bot
 		else
 		 @direction[0] = -1*@direction[0]
 		end
+	end
+	
+	def vroute(x,y,x1,y1)
+	 result=[x1-x,y1-y]
+	 return result
+	end
+
+	def len(x)
+	 result=Math.sqrt(x[0]*x[0]+x[1]*x[1])
+	 return result
+	end
+
+	def block_fov(x,y)
+	 ii=0
+	 result=1
+                while ii<@blk[0].size
+		 l1=len(vroute(@x,@y,x,y))	
+		 l2=len(vroute(@x,@y,@blk[0][ii],@blk[1][ii]))
+		 if (check_fov1(@blk[0][ii],@blk[1][ii],90) == 1 and l1>l2)
+			result=0
+		 end
+                 ii+=1
+                end
+	 return result
 	end
 
 	def showxy(x,y)
