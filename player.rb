@@ -67,7 +67,7 @@ class Player
 	 @image.draw_rot(@x, @y, 1, 0)
 	end
 	
-	def check(route, vert)
+	def check(route, vert) #Check box crossing
 	  i=0
 	  res=0
 	 if vert == 0

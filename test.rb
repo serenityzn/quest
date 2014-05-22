@@ -1,9 +1,21 @@
-  @bloks = Array.new
-  @bloks[0] = [0, 20, 100, 120, 420, 300, 100]
-  @bloks[1] = [0, 20, 40, 100, 160, 120, 200]
+def readlvl(lvl)
+ bloks = Array.new
+ bloks[0] = Array.new
+ bloks[1] = Array.new
+ i=0
+ j=0
+ open(lvl).each {|f|
+   while j<32
+ 	if f[j] == "x"
+ 	 bloks[0]<< 20*j
+ 	 bloks[1]<<20*(i-1)
+ 	end
+ 	j+=1
+   end
+ i+=1
+ j=0
+ }
 
-i=0
-while i<@bloks[0].size
-	puts @bloks[0][i].to_s+"\n"
-	i+=1
+ return bloks
 end
+

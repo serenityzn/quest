@@ -20,4 +20,5 @@ class Level
 	   i +=1
 	 end
 	end
+
 end

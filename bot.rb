@@ -45,11 +45,10 @@ class Bot
 	    ang = get_angle2(@direction,1,0)
 	  end
 	  @moveangle = ang
-#	  @moveangle %= 360
-	 if (check_fov1(x,y,90) == 1 and block_fov(x,y) == 1)
+	 if (check_fov1(x,y,120) == 1 and block_fov(x,y) == 1)
 	  @direction=chg_dir(x,y)
 	 end
-		if check(@direction[0],0) == 0
+		if simple_check == 0
 		 @x += @direction[0]
 		 @y += @direction[1]
 		else
@@ -57,12 +56,12 @@ class Bot
 		end
 	end
 	
-	def vroute(x,y,x1,y1)
+	def vroute(x,y,x1,y1) #Pointer V
 	 result=[x1-x,y1-y]
 	 return result
 	end
 
-	def len(x)
+	def len(x) # Length of V
 	 result=Math.sqrt(x[0]*x[0]+x[1]*x[1])
 	 return result
 	end
@@ -73,7 +72,7 @@ class Bot
                 while ii<@blk[0].size
 		 l1=len(vroute(@x,@y,x,y))	
 		 l2=len(vroute(@x,@y,@blk[0][ii],@blk[1][ii]))
-		 if (check_fov1(@blk[0][ii],@blk[1][ii],90) == 1 and l1>l2)
+		 if (check_fov1(@blk[0][ii],@blk[1][ii],120) == 1 and l1>l2)
 			result=0
 		 end
                  ii+=1
@@ -82,12 +81,7 @@ class Bot
 	end
 
 	def showxy(x,y)
-#	 print "x=["+@x.to_s+"] y=["+@y.to_s+"]\n"
-#	 print "PlayerCoord=["+x.to_s+","+y.to_s+"]\n"
-#	 print "BotCoord=["+@x.to_s+","+@y.to_s+"]\n"
-#	 print "BotDirection=["+@direction[0].to_s+","+@direction[1].to_s+"\n"
-#	 print "DIR RESULT == [ "+check_fov(x, y).to_s+"]\n"
-	 print "MoveAngle="+@moveangle.to_s+"\n Direction="+@direction.to_s+"\n"
+#	 print "Direction=["+@direction[0].to_s+","+@direction[1].to_s+"]\n"
 	end
 
 	def draw
@@ -152,29 +146,17 @@ class Bot
 	 end
 	 return see
 	end
-	
-	def check(route, vert)
-	  i=0
-	  res=0
-	 if vert == 0
-	  while i <@blk[0].size
-	    if  (@x+route-@blk[0][i]-20).abs < 5 or  (@x+route-@blk[0][i]).abs < 5
-		if (@y-@blk[1][i]).abs < 30 and @y>@blk[1][i]-10
-		 res=1
-		end
-	    end
-	    i +=1	
+
+	def simple_check
+	 i = 0
+	 res = 0
+	 while i < @blk[0].size
+	  if len(vroute(@x+@direction[0],@y+@direction[1],@blk[0][i],@blk[1][i])) < 40
+		res = 1
 	  end
-	 else
-	  while i <@blk[0].size
-	   if (@y+route-@blk[1][i]-20).abs < 10 or (@y+route-@blk[1][i]).abs < 10
-		if (@x-@blk[0][i]).abs <30 and @x>@blk[0][i]-10
-		 res =1
-		end
-	   end
-	   i += 1
-	  end
+	  i+=1
 	 end
-	  return res
+	 return res
 	end
+	
 end
