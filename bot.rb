@@ -40,19 +40,29 @@ class Bot
 	end
 
 	def crossblock(direction, x, bl)
-	        res = true
-	        bl1 =[0,0]
+	        res = false
+	        bl1 = [0,0]
+		bl2 = [0,0]
 	        bl1[0] = bl[0]
 	        bl1[1] = bl[1]+20
+		bl2[0] = bl[0]+20
+		bl2[1] = bl[1]
 	        v1 = [bl[0]-x[0], bl[1]-x[1]]
 	        v2 = [bl1[0]-x[0], bl1[1]-x[1]]
+		v3 = [bl2[0]-x[0], bl2[1]-x[1]]
 	        v1_v2 = (Math.acos(skal(norm(v1), norm(v2)))*180/3.14159)
+	        v1_v3 = (Math.acos(skal(norm(v1), norm(v3)))*180/3.14159)
 	        v1_x = (Math.acos(skal(norm(v1), norm(direction)))*180/3.14159)
 	        v2_x = (Math.acos(skal(norm(v2), norm(direction)))*180/3.14159)
-	        if v1_x > v1_v2
-	         res = false
-	        elsif v2_x > v1_v2
-	         res = false
+	        v3_x = (Math.acos(skal(norm(v3), norm(direction)))*180/3.14159)
+	        if v1_x < v1_v2
+	         res = true
+	        elsif v2_x < v1_v2
+	         res = true
+		elsif v1_x < v1_v3
+		 res = true
+		elsif v3_x < v1_v3
+		 res = true
 	        end
 
 	        return res
