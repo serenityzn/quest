@@ -6,6 +6,7 @@ class Player
 	 @score = 0
 	 @step = 2
 	 @blk = Array.new
+	 @mw = window
 	end
 	
 	def x
@@ -19,6 +20,12 @@ class Player
 	def warp(x, y, blk)
 	 @x, @y = x, y
 	 @blk = blk
+	end
+
+	def inv
+	 @inv = Inventory.new(@mw)
+	 @inv.warp(20, 200)
+	 @inv.draw
 	end
 
 	def turn_left

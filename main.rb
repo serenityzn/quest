@@ -1,4 +1,5 @@
 require 'rubygems'
+require './inventory.rb'
 require 'gosu'
 require './player.rb'
 require './level.rb'
@@ -28,8 +29,6 @@ class GameWindow < Gosu::Window
 
 	def initialize
 	 @bloks = Array.new
-#         @bloks[0] = [0, 20, 100, 120, 420, 300, 100, 200, 620]
- #        @bloks[1] = [0, 20, 40, 100, 160, 120, 200, 300, 460]
 	 @bloks = readlvl('level.lvl')
 	 size = @bloks[1].size
 
@@ -40,6 +39,9 @@ class GameWindow < Gosu::Window
 	 @pl = Player.new(self)
 	 @pl.warp(320,240,@bloks)
 	
+	 @inv = Inventory.new(self)
+	 @inv.warp(20,460)
+
 	 @bot = Bot.new(self)
 	 @bot.warp(250, 120, @bloks)
 
@@ -51,25 +53,23 @@ class GameWindow < Gosu::Window
 	 if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft then
 	   @pl.turn_left
 	   @pl.showxy
-	   @bot.showxy(1,1)
 	 end
 	 
 	 if button_down? Gosu::KbRight or button_down? Gosu::GpRight then
 	   @pl.turn_right
 	   @pl.showxy
-	   @bot.showxy(1,1)
+	   @inv.next
 	 end
 	 
 	 if button_down? Gosu::KbUp or button_down? Gosu::GpUp then
 	   @pl.turn_up
 	   @pl.showxy
-	   @bot.showxy(1,1)
 	 end
 	 
 	 if button_down? Gosu::KbDown or button_down? Gosu::GpDown then
 	   @pl.turn_down
 	   @pl.showxy
-	   @bot.showxy(1,1)
+	   @inv_o = 10
 	 end
 
 	 @pl.move
@@ -81,6 +81,9 @@ class GameWindow < Gosu::Window
 	 @bot.draw()
 	 @level.draw()
 	 @bg_img.draw(0,0,0)
+	 if @inv_o == 10
+	 @inv.draw()
+	 end
 	end
 
 	def button_down(id)

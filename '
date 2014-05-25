@@ -1,0 +1,34 @@
+class Inventory
+	def initialize(window)
+	 @image = Array.new
+	 @image[0] = Gosu::Image.new(window, "imgs/card.png", false)
+	 @image[1] = Gosu::Image.new(window, "imgs/card.png", false)
+	 @size=6
+	 @x = @y = 0.0
+	 @blk = Array.new
+	end
+	
+	def x
+	 return @x
+	end
+
+	def y
+	 return @y
+	end
+
+	def warp(x, y)
+	 @x, @y = x, y
+	end
+
+	def showxy
+#	 print "x=["+@x.to_s+"] y=["+@y.to_s+"] Direction = ["+@direction[0].to_s+","+@direction[1].to_s+"]\n"
+	end
+
+	def draw
+          i=0
+	 while i<@image.size
+	  @image[i].draw_rot(@x+i*40, @y, 1, 0)
+	 end
+	end
+	
+end

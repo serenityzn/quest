@@ -193,7 +193,7 @@ class Bot
 	end
 
 	def simple_check(v_n)
-	 step = 20
+	 step = 25
 	 i = 0
 	 res = 0
 	 x = [@x, @y]
