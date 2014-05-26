@@ -8,6 +8,7 @@ class Inventory
 	 @x = @y = 0.0
 	 @blk = Array.new
 	 @window = window
+	 @font = Gosu::Font.new(window, Gosu::default_font_name, 20)
 	end
 	
 	def add(element)
@@ -33,6 +34,7 @@ class Inventory
 	def prev
 	 if @n_el > 0
 	  @n_el -= 1
+	  @font.draw("GAME OVER", 200,200, ZOrder::UI, 3.0, 3.0, 0xcccc0000)
 	 else
 	  @n_el = @image.size-1
 	 end

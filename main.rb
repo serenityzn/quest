@@ -5,6 +5,10 @@ require './player.rb'
 require './level.rb'
 require './bot.rb'
 
+module ZOrder
+  Background, Stars, Player, UI = *0..3
+end
+
 class GameWindow < Gosu::Window
         def readlvl(lvl)
          bloks = Array.new
@@ -32,10 +36,12 @@ class GameWindow < Gosu::Window
 	 @bloks = readlvl('level.lvl')
 	 size = @bloks[1].size
 	 @inv_enable = false
-
+	 @qi = 1
+	 @wi = 1
 	 super 640, 480, false
 	 self.caption = "QUEST"
 
+	 @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
 	 @bg_img = Gosu::Image.new(self, "imgs/grass_bg.jpg", true)
 	 @pl = Player.new(self)
 	 @pl.warp(320,240,@bloks)
@@ -51,6 +57,7 @@ class GameWindow < Gosu::Window
 	end
 
 	def update
+	 
 	 if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft then
 	   @pl.turn_left
 	   @pl.showxy
@@ -72,11 +79,22 @@ class GameWindow < Gosu::Window
 	 end
 
 	 if button_down? Gosu::KbQ
-	   @inv.prev
+	    if @qi == 1
+	     @inv.prev
+	    elsif @qi == 5
+	     @qi = 0
+            end
+            @qi += 1
+	    print "QI=="+@qi.to_s+"\n"
 	 end	 
 	 
 	 if button_down? Gosu::KbW
-	   @inv.next
+	    if @wi == 1
+	     @inv.next
+	    elsif @wi == 5
+	     @wi = 0
+            end
+            @wi += 1
 	 end	 
 	
 	 if button_down? Gosu::KbI then
