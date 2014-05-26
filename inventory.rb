@@ -23,16 +23,28 @@ class Inventory
 	end
 	
 	def next
-	 if @n_el < @image.size
+	 if @n_el < @image.size-1
 	  @n_el += 1
 	 else
 	  @n_el = 0
 	 end
 	end
 
+	def prev
+	 if @n_el > 0
+	  @n_el -= 1
+	 else
+	  @n_el = @image.size-1
+	 end
+	end
+	
 	def warp(x, y)
 	 @x, @y = x, y
 	 add("card")
+	 add("card")
+	 add("card")
+	 add("gun")
+	 add("gun")
 	 add("gun")
 	end
 
