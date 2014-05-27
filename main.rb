@@ -38,6 +38,7 @@ class GameWindow < Gosu::Window
 	 @inv_enable = false
 	 @qi = 1
 	 @wi = 1
+	 @invdesc = ""
 	 super 640, 480, false
 	 self.caption = "QUEST"
 
@@ -117,8 +118,11 @@ class GameWindow < Gosu::Window
 	 @level.draw()
 	 @bg_img.draw(0,0,0)
 	 if @inv_o == 10
-	 @inv.draw()
+	  @inv.draw()
+	  @invdesc = @inv.get_name(@inv.get_num)
 	 end
+	 #inventory description
+	 @font.draw("#{@invdesc}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xffffff00)
 	end
 
 	def button_down(id)

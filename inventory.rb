@@ -1,6 +1,8 @@
 class Inventory
 	def initialize(window)
 	 @image = Array.new
+	 @image[0] = Array.new
+	 @image[1] = Array.new
 	 @ramka = Gosu::Image.new(window, "imgs/ramka.png", false)
 	 #@image << Gosu::Image.new(window, "imgs/card.png", false)
 	 @size = 6
@@ -12,7 +14,8 @@ class Inventory
 	end
 	
 	def add(element)
-	 @image << Gosu::Image.new(@window, "imgs/"+element+".png", false)
+	 @image[0] << Gosu::Image.new(@window, "imgs/"+element+".png", false)
+	 @image[1] << element
 	end
 
 	def x
@@ -24,7 +27,7 @@ class Inventory
 	end
 	
 	def next
-	 if @n_el < @image.size-1
+	 if @n_el < @image[0].size-1
 	  @n_el += 1
 	 else
 	  @n_el = 0
@@ -36,18 +39,23 @@ class Inventory
 	  @n_el -= 1
 	  @font.draw("GAME OVER", 200,200, ZOrder::UI, 3.0, 3.0, 0xcccc0000)
 	 else
-	  @n_el = @image.size-1
+	  @n_el = @image[0].size-1
 	 end
 	end
 	
 	def warp(x, y)
 	 @x, @y = x, y
 	 add("card")
-	 add("card")
-	 add("card")
 	 add("gun")
-	 add("gun")
-	 add("gun")
+	 add("key")
+	end
+	
+	def get_name(n)
+	 return @image[1][n]
+	end
+	
+	def get_num
+	 return @n_el
 	end
 
 	def showxy
@@ -56,11 +64,12 @@ class Inventory
 
 	def draw
           i=0
-	 while i<@image.size
-	  @image[i].draw_rot(@x+i*40, @y, 1, 0)
+	 while i<@image[0].size
+	  @image[0][i].draw_rot(@x+i*40, @y, 1, 0)
 	  i += 1
 	 end
 	 @ramka.draw_rot(@x+@n_el*40,@y,1,0)
+	 return @n_el
 	end
 	
 end
