@@ -36,11 +36,11 @@ class Gun < Elements
 
 	def pickup(x,y,inv)
 	 if @alive == true
-	  if (x >= @x and x <= @x+20)
+	  if (x >= @x and x <= @x+20 and y >= @y and y <= @y+20)
 	    if inv.get_id_by_name("gun") == NIL
 	     inv.add("gun",10)
 	    else
-	     print "add ammo"
+	     inv.update(inv.get_id_by_name("gun"),20)
 	    end
 	    @alive = false
 	  end 

@@ -20,6 +20,10 @@ class Inventory
 	 @image[2] << opt
 	end
 
+	def update(id,new)
+	 @image[2][id] = new
+	end
+
 	def get_id_by_name(name) #return inventory id by name
 	  return @image[0].index(name)
 	end
