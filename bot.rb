@@ -193,7 +193,7 @@ class Bot
 	end
 
 	def simple_check(v_n)
-	 step = 25
+	 step = 12
 	 i = 0
 	 res = 0
 	 x = [@x, @y]
@@ -202,6 +202,12 @@ class Bot
 	  if crossblock(@direction, x, bl ) == true
 	   if len(vroute(@x+@direction[0],@y+@direction[1],@blk[0][i],@blk[1][i])) < step
 	 	res = 1
+	   elsif len(vroute(@x+@direction[0],@y+@direction[1],@blk[0][i]+20,@blk[1][i])) < step
+                res = 1
+           elsif len(vroute(@x+@direction[0],@y+@direction[1],@blk[0][i],@blk[1][i]+20)) < step
+                res = 1
+           elsif len(vroute(@x+@direction[0],@y+@direction[1],@blk[0][i]+20,@blk[1][i]+20)) < step
+                res = 1
 	   end
           end
 	  i+=1

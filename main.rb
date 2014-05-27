@@ -4,6 +4,7 @@ require 'gosu'
 require './player.rb'
 require './level.rb'
 require './bot.rb'
+require './elements.rb'
 
 module ZOrder
   Background, Stars, Player, UI = *0..3
@@ -39,6 +40,8 @@ class GameWindow < Gosu::Window
 	 @qi = 1
 	 @wi = 1
 	 @invdesc = ""
+	 @sht_acc = 10
+	 @sht_i = [0,0]
 	 super 640, 480, false
 	 self.caption = "QUEST"
 
@@ -55,6 +58,9 @@ class GameWindow < Gosu::Window
 
 	 @level = Level.new(self,size)
 	 @level.warp(@bloks)
+
+	 @gun = Gun.new(self,"gun")
+	 @gun.warp(10,10)
 	end
 
 	def update
@@ -70,12 +76,13 @@ class GameWindow < Gosu::Window
 	 end
 	 
 	 if button_down? Gosu::KbUp or button_down? Gosu::GpUp then
-	   @pl.turn_up
+#	   @pl.turn_up
 	   @pl.showxy
+	   @pl.accelerate
 	 end
 	 
 	 if button_down? Gosu::KbDown or button_down? Gosu::GpDown then
-	   @pl.turn_down
+	   @pl.deaccelerate
 	   @pl.showxy
 	 end
 
@@ -108,7 +115,17 @@ class GameWindow < Gosu::Window
 	  end
 	 end
 
+	 if button_down? Gosu::KbSpace then
+	   if @inv.get_name(@inv.get_num) == "gun"
+	    @pl.sht_start(@sht_acc)
+	   end
+#	   print "BANG!"
+	
+	 end
+
 	 @pl.move
+	 @pl.shoot
+	 @gun.pickup(@pl.x,@pl.y,@inv)
 	 @bot.move(@pl.x, @pl.y)
 	end
 
@@ -116,6 +133,7 @@ class GameWindow < Gosu::Window
 	 @pl.draw()
 	 @bot.draw()
 	 @level.draw()
+	 @gun.draw()
 	 @bg_img.draw(0,0,0)
 	 if @inv_o == 10
 	  @inv.draw()

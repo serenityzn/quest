@@ -1,8 +1,9 @@
 class Inventory
 	def initialize(window)
 	 @image = Array.new
-	 @image[0] = Array.new
-	 @image[1] = Array.new
+	 @image[0] = Array.new # image
+	 @image[1] = Array.new # desc
+	 @image[2] = Array.new # optinons (ammo, number, etc)
 	 @ramka = Gosu::Image.new(window, "imgs/ramka.png", false)
 	 #@image << Gosu::Image.new(window, "imgs/card.png", false)
 	 @size = 6
@@ -13,9 +14,14 @@ class Inventory
 	 @font = Gosu::Font.new(window, Gosu::default_font_name, 20)
 	end
 	
-	def add(element)
+	def add(element,opt)
 	 @image[0] << Gosu::Image.new(@window, "imgs/"+element+".png", false)
 	 @image[1] << element
+	 @image[2] << opt
+	end
+
+	def get_id_by_name(name) #return inventory id by name
+	  return @image[0].index(name)
 	end
 
 	def x
@@ -37,7 +43,6 @@ class Inventory
 	def prev
 	 if @n_el > 0
 	  @n_el -= 1
-	  @font.draw("GAME OVER", 200,200, ZOrder::UI, 3.0, 3.0, 0xcccc0000)
 	 else
 	  @n_el = @image[0].size-1
 	 end
@@ -45,11 +50,11 @@ class Inventory
 	
 	def warp(x, y)
 	 @x, @y = x, y
-	 add("card")
-	 add("gun")
-	 add("key")
+#	 add("card",1)
+#	 add("gun", 10)
+#	 add("key", 1)
 	end
-	
+		
 	def get_name(n)
 	 return @image[1][n]
 	end
