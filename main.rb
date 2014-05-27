@@ -60,7 +60,11 @@ class GameWindow < Gosu::Window
 	 @level.warp(@bloks)
 
 	 @gun = Gun.new(self,"gun")
-	 @gun.warp(10,10)
+	 @gun.warp(40,40)
+	 @gun1 = Gun.new(self,"gun")
+	 @gun1.warp(40,100)
+	 @gun2 = Gun.new(self,"gun")
+	 @gun2.warp(100,100)
 	end
 
 	def update
@@ -126,6 +130,8 @@ class GameWindow < Gosu::Window
 	 @pl.move
 	 @pl.shoot
 	 @gun.pickup(@pl.x,@pl.y,@inv)
+	 @gun1.pickup(@pl.x,@pl.y,@inv)
+	 @gun2.pickup(@pl.x,@pl.y,@inv)
 	 @bot.move(@pl.x, @pl.y)
 	end
 
@@ -134,13 +140,16 @@ class GameWindow < Gosu::Window
 	 @bot.draw()
 	 @level.draw()
 	 @gun.draw()
+	 @gun1.draw()
+	 @gun2.draw()
 	 @bg_img.draw(0,0,0)
 	 if @inv_o == 10
 	  @inv.draw()
 	  @invdesc = @inv.get_name(@inv.get_num)
+	  @invopt = @inv.get_opt(@inv.get_num)
 	 end
 	 #inventory description
-	 @font.draw("#{@invdesc}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xffffff00)
+	 @font.draw("#{@invdesc} : #{@invopt}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xffffff00)
 	end
 
 	def button_down(id)

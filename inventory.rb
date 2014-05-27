@@ -23,9 +23,13 @@ class Inventory
 	def update(id,new)
 	 @image[2][id] = new
 	end
+	
+	def get_opt(id)
+	 return @image[2][id]
+	end
 
 	def get_id_by_name(name) #return inventory id by name
-	  return @image[0].index(name)
+	  return @image[1].index(name)
 	end
 
 	def x

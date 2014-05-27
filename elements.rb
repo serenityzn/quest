@@ -23,10 +23,8 @@ class Elements
 	end
 
 	def draw
-	 print "CLASS preDraw"+@alive.to_s+"\n"
 	 if @alive == true
 	  @img.draw_rot(@x, @y, 1, 0)
-	  print "CLASS DRAWW\n"
 	 end
 	end
 	
@@ -40,7 +38,8 @@ class Gun < Elements
 	    if inv.get_id_by_name("gun") == NIL
 	     inv.add("gun",10)
 	    else
-	     inv.update(inv.get_id_by_name("gun"),20)
+	     new_value = inv.get_opt(inv.get_id_by_name("gun"))+10
+	     inv.update(inv.get_id_by_name("gun"),new_value)
 	    end
 	    @alive = false
 	  end 
