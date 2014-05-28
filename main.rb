@@ -121,10 +121,11 @@ class GameWindow < Gosu::Window
 
 	 if button_down? Gosu::KbSpace then
 	   if @inv.get_name(@inv.get_num) == "gun"
-	    @pl.sht_start(@sht_acc)
+	    if @inv.get_opt(@inv.get_num) > 0
+	     @pl.sht_start(@sht_acc)
+	     @inv.update(@inv.get_num,@inv.get_opt(@inv.get_num)-1)
+	    end
 	   end
-#	   print "BANG!"
-	
 	 end
 
 	 @pl.move
