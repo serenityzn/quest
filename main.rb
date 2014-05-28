@@ -90,43 +90,8 @@ class GameWindow < Gosu::Window
 	   @pl.showxy
 	 end
 
-	 if button_down? Gosu::KbQ
-	    if @qi == 1
-	     @inv.prev
-	    elsif @qi == 5
-	     @qi = 0
-            end
-            @qi += 1
-	    print "QI=="+@qi.to_s+"\n"
-	 end	 
-	 
-	 if button_down? Gosu::KbW
-	    if @wi == 1
-	     @inv.next
-	    elsif @wi == 5
-	     @wi = 0
-            end
-            @wi += 1
-	 end	 
 	
-	 if button_down? Gosu::KbI then
-	  if @inv_enable == false
-	   @inv_o = 10
-	   @inv_enable = true
-	  else
-	   @inv_o = 0
-	   @inv_enable = false
-	  end
-	 end
 
-	 if button_down? Gosu::KbSpace then
-	   if @inv.get_name(@inv.get_num) == "gun"
-	    if @inv.get_opt(@inv.get_num) > 0
-	     @pl.sht_start(@sht_acc)
-	     @inv.update(@inv.get_num,@inv.get_opt(@inv.get_num)-1)
-	    end
-	   end
-	 end
 
 	 @pl.move
 	 @pl.shoot
@@ -158,6 +123,33 @@ class GameWindow < Gosu::Window
 	   close
 	 end
 	end
+	
+	def button_up(id)
+	 if id == Gosu::KbI then
+	  if @inv_enable == false
+	   @inv_o = 10
+	   @inv_enable = true
+	  else
+	   @inv_o = 0
+	   @inv_enable = false
+	  end
+	 end
+	 if id == Gosu::KbQ then
+	     @inv.prev
+	 end	 
+	 if id == Gosu::KbW then
+	     @inv.next
+	 end	 
+	 if id == Gosu::KbSpace then
+	   if @inv.get_name(@inv.get_num) == "gun"
+	    if @inv.get_opt(@inv.get_num) > 0
+	     @pl.sht_start(@sht_acc)
+	     @inv.update(@inv.get_num,@inv.get_opt(@inv.get_num)-1)
+	    end
+	   end
+	 end
+	end
+
 end
 
 window = GameWindow.new

@@ -58,9 +58,9 @@ class Inventory
 	
 	def warp(x, y)
 	 @x, @y = x, y
-#	 add("card",1)
-#	 add("gun", 10)
-#	 add("key", 1)
+	 add("card",1)
+	 add("gun", 10)
+	 add("key", 1)
 	end
 		
 	def get_name(n)
