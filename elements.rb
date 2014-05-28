@@ -1,6 +1,6 @@
 class Elements
 	def initialize(window,img)
-	 @img = Gosu::Image.new(window, "imgs/gun.png", false)
+	 @img = Gosu::Image.new(window, img, false)
 	 @x = @y = 0.0
 	 @window = window
 	 @alive = true
@@ -47,3 +47,4 @@ class Gun < Elements
 	end
 
 end
+

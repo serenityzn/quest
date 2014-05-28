@@ -1,10 +1,12 @@
 require 'rubygems'
 require './inventory.rb'
 require 'gosu'
+require './human.rb'
 require './player.rb'
 require './level.rb'
 require './bot.rb'
 require './elements.rb'
+
 
 module ZOrder
   Background, Stars, Player, UI = *0..3
@@ -47,24 +49,20 @@ class GameWindow < Gosu::Window
 
 	 @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
 	 @bg_img = Gosu::Image.new(self, "imgs/grass_bg.jpg", true)
-	 @pl = Player.new(self)
+	 @pl = Player.new(self,["imgs/pl.png", "imgs/bullet.png"],4.5)
 	 @pl.warp(320,240,@bloks)
 	
 	 @inv = Inventory.new(self)
 	 @inv.warp(20,460)
 
-	 @bot = Bot.new(self)
+	 @bot = Bot.new(self,["imgs/bot1.png", "imgs/bullet.png"],1)
 	 @bot.warp(250, 120, @bloks)
 
 	 @level = Level.new(self,size)
 	 @level.warp(@bloks)
 
-	 @gun = Gun.new(self,"gun")
+	 @gun = Gun.new(self,"imgs/gun.png")
 	 @gun.warp(40,40)
-	 @gun1 = Gun.new(self,"gun")
-	 @gun1.warp(40,100)
-	 @gun2 = Gun.new(self,"gun")
-	 @gun2.warp(100,100)
 	end
 
 	def update
@@ -96,8 +94,6 @@ class GameWindow < Gosu::Window
 	 @pl.move
 	 @pl.shoot
 	 @gun.pickup(@pl.x,@pl.y,@inv)
-	 @gun1.pickup(@pl.x,@pl.y,@inv)
-	 @gun2.pickup(@pl.x,@pl.y,@inv)
 	 @bot.move(@pl.x, @pl.y)
 	end
 
@@ -106,8 +102,6 @@ class GameWindow < Gosu::Window
 	 @bot.draw()
 	 @level.draw()
 	 @gun.draw()
-	 @gun1.draw()
-	 @gun2.draw()
 	 @bg_img.draw(0,0,0)
 	 if @inv_o == 10
 	  @inv.draw()
