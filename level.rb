@@ -91,19 +91,19 @@ class Level
 
 	def close_door
 	  i =  com = 0
+	  com = @n_door_coord[1]
 	  while i<@bloks[0].size
-	    com = @n_door_coord[1]
 	    while com <= @n_door_coord[2]
-#	     print_pl
-#	     print "Ndoor="+@n_door_coord.to_s+"\n"
-	     print "enter\n"
-		@bloks[2] << "="
-		@bloks[0] << @n_door_coord[1][i]
-		@bloks[1] << @n_door_coord[0][i]
+	     @bloks[0] << com
+	     @bloks[1] << @n_door_coord[0]
+	     @bloks[2] << "="
+	     @n_door_coord[3] = "Closed"
+	     change_door_arr(@n_door_coord)
 	     com += 20
 	    end
 	    i += 1
 	  end
+	  @max = @bloks[0].size
 	end
 
 	def change_door_arr(val)
@@ -124,7 +124,6 @@ class Level
 		if x > @doors_array[1][i].to_i and x < @doors_array[2][i].to_i+20
 		 res[0] = "DOOR"
 		 res[1] = @doors_array[3][i]
-		 #print "doors_array="+@doors_array.to_s+"\n"
 		 @n_door_coord = [@doors_array[0][i].to_i,@doors_array[1][i].to_i,@doors_array[2][i].to_i, @doors_array[3][i]]
 		else
 		 res[0] = "" 
