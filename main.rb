@@ -41,7 +41,7 @@ class GameWindow < Gosu::Window
         end
 
 	def initialize
-	 @door_txt = ""
+	 @door_txt = Array.new
 	 @bloks = Array.new
 	 @bloks = readlvl('level.lvl')
 	 size = @bloks[1].size
@@ -114,7 +114,7 @@ class GameWindow < Gosu::Window
 	 end
 	 #inventory description
 	 @font.draw("#{@invdesc} : #{@invopt}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xffffff00)
-	 @font.draw("#{@door_txt}", 300, 10, ZOrder::UI, 1.0, 1.0, 0xffffff00)
+	 @font.draw("#{@door_txt[0]}", 300, 10, ZOrder::UI, 1.0, 1.0, 0xffffff00)
 	end
 
 	def button_down(id)
@@ -146,8 +146,12 @@ class GameWindow < Gosu::Window
 	     @inv.update(@inv.get_num,@inv.get_opt(@inv.get_num)-1)
 	    end
 	   elsif @inv.get_name(@inv.get_num) == "key" 
-	     if @door_txt != ""
-	      @level.open_door
+	     if @door_txt[0] != ""
+	      if @door_txt[1] == "Closed"
+	       @level.open_door
+	      else
+	       @level.close_door
+	      end
 	     end
 	   end
 	 end
