@@ -17,13 +17,19 @@ class GameWindow < Gosu::Window
          bloks = Array.new
          bloks[0] = Array.new
          bloks[1] = Array.new
+	 bloks[2] = Array.new
          i=0
          j=0
          open(lvl).each {|f|
            while j<32
-                if f[j] == "x"
+                if f[j] == "x" or f[j] == "="
                  bloks[0]<< 20*j
-                 bloks[1]<<20*(i-1)
+                 bloks[1]<< 20*(i-1)
+		 if f[j] == "x"
+		  bloks[2]<< "x"
+		 elsif f[j] == "="
+		  bloks[2]<< "="
+		 end
                 end
                 j+=1
            end
@@ -35,6 +41,7 @@ class GameWindow < Gosu::Window
         end
 
 	def initialize
+	 @door_txt = ""
 	 @bloks = Array.new
 	 @bloks = readlvl('level.lvl')
 	 size = @bloks[1].size
@@ -87,10 +94,7 @@ class GameWindow < Gosu::Window
 	   @pl.deaccelerate
 	   @pl.showxy
 	 end
-
-	
-
-
+	 @door_txt = @level.chk_near_door(@pl.x, @pl.y)
 	 @pl.move
 	 @pl.shoot
 	 @gun.pickup(@pl.x,@pl.y,@inv)
@@ -110,6 +114,7 @@ class GameWindow < Gosu::Window
 	 end
 	 #inventory description
 	 @font.draw("#{@invdesc} : #{@invopt}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xffffff00)
+	 @font.draw("#{@door_txt}", 300, 10, ZOrder::UI, 1.0, 1.0, 0xffffff00)
 	end
 
 	def button_down(id)
@@ -140,7 +145,14 @@ class GameWindow < Gosu::Window
 	     @pl.sht_start(@sht_acc)
 	     @inv.update(@inv.get_num,@inv.get_opt(@inv.get_num)-1)
 	    end
+	   elsif @inv.get_name(@inv.get_num) == "key" 
+	     if @door_txt != ""
+	      @level.open_door
+	     end
 	   end
+	 end
+	 if id == Gosu::KbD then
+	  @level.doors
 	 end
 	end
 

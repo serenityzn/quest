@@ -1,0 +1,26 @@
+arr = Array.new
+arr[0] = [0,20,40,60,100,120,40,60,80]
+arr[1] = [10,10,10,10,20,20,50,50,50]
+@res = Array.new
+
+	def del_y(arr)
+	 x = arr[1][0]
+	 res = x
+	 j=0 
+	 arr[1].each do |i|
+	  print "Element="+i.to_s+"\n"
+	  if x == i
+  	   arr[1][j] =  NIL
+ 	  end
+	  j += 1
+	 end
+	 return res
+	end
+
+
+
+print arr[1].to_s+"\n"
+@res << del_y(arr)
+print arr[1].to_s+"\n"
+print "res="+@res.to_s+"\n"
+
