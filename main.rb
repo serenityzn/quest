@@ -13,38 +13,12 @@ module ZOrder
 end
 
 class GameWindow < Gosu::Window
-        def readlvl(lvl)
-         bloks = Array.new
-         bloks[0] = Array.new
-         bloks[1] = Array.new
-	 bloks[2] = Array.new
-         i=0
-         j=0
-         open(lvl).each {|f|
-           while j<32
-                if f[j] == "x" or f[j] == "="
-                 bloks[0]<< 20*j
-                 bloks[1]<< 20*(i-1)
-		 if f[j] == "x"
-		  bloks[2]<< "x"
-		 elsif f[j] == "="
-		  bloks[2]<< "="
-		 end
-                end
-                j+=1
-           end
-         i+=1
-         j=0
-         }
-
-         return bloks
-        end
-
 	def initialize
 	 @door_txt = Array.new
 	 @bloks = Array.new
-	 @bloks = readlvl('level.lvl')
-	 size = @bloks[1].size
+#	 @bloks = readlvl('level.lvl')
+#	 size = @bloks[1].size
+	 size = 0
 	 @inv_enable = false
 	 @qi = 1
 	 @wi = 1
@@ -56,6 +30,9 @@ class GameWindow < Gosu::Window
 
 	 @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
 	 @bg_img = Gosu::Image.new(self, "imgs/grass_bg.jpg", true)
+	 @level = Level.new(self,size)
+	 @level.warp
+	 @bloks = @level.bloks
 	 @pl = Player.new(self,["imgs/pl.png", "imgs/bullet.png"],4.5)
 	 @pl.warp(320,240,@bloks)
 	
@@ -65,8 +42,6 @@ class GameWindow < Gosu::Window
 	 @bot = Bot.new(self,["imgs/bot1.png", "imgs/bullet.png"],1)
 	 @bot.warp(250, 120, @bloks)
 
-	 @level = Level.new(self,size)
-	 @level.warp(@bloks)
 
 	 @gun = Gun.new(self,"imgs/gun.png")
 	 @gun.warp(40,40)

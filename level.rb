@@ -6,7 +6,8 @@ class Level
 	 @bloks = Array.new
 	 @bloks[0] = Array.new
 	 @bloks[1] = Array.new
-	 @max = size
+	 @bloks = readlvl('level.lvl')
+	 @max = @bloks[1].size
 	 @drs = Array.new
 	 @drs[0] = Array.new
 	 @drs[1] = Array.new
@@ -17,8 +18,15 @@ class Level
 	 @n_door_coord = [0, 0, 0]
 	end
 
-	def warp(xy)
-	 @bloks = xy
+	def size
+	 return @max
+	end
+
+	def bloks
+	 return @bloks
+	end
+
+	def warp
 	 create_doors_array
 	 @doors_array = door_create(@drs, get_uniq_y(@drs))
 #	 print @doors_array.to_s+"\n"
@@ -212,4 +220,33 @@ class Level
           end
          return res
         end
+
+# READ LEVEL
+    def readlvl(lvl)
+         bloks = Array.new
+         bloks[0] = Array.new
+         bloks[1] = Array.new
+         bloks[2] = Array.new
+         i=0
+         j=0
+         open(lvl).each {|f|
+           while j<32
+                if f[j] == "x" or f[j] == "="
+                 bloks[0]<< 20*j
+                 bloks[1]<< 20*(i-1)
+                 if f[j] == "x"
+                  bloks[2]<< "x"
+                 elsif f[j] == "="
+                  bloks[2]<< "="
+                 end
+                end
+                j+=1
+           end
+         i+=1
+         j=0
+         }
+
+         return bloks
+        end
+
 end	
