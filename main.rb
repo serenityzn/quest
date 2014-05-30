@@ -128,6 +128,14 @@ class GameWindow < Gosu::Window
 	       @level.close_door(1)
 	      end
 	     end
+	   elsif @inv.get_name(@inv.get_num) == "card"
+             if @door_txt[0] != ""
+              if @door_txt[1] == "Closed"
+               @level.open_door(2)
+              else
+               @level.close_door(2)
+              end
+             end
 	   end
 	 end
 	 if id == Gosu::KbD then

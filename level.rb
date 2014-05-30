@@ -2,6 +2,7 @@ class Level
 	def initialize(window, size)
 	 @img_wall = Gosu::Image.new(window, "imgs/bl.png", false)
 	 @img_door = Gosu::Image.new(window, "imgs/door.png", false)
+	 @img_door2 = Gosu::Image.new(window, "imgs/door2.png", false)
 	 @x = @y = 0
 	 @bloks = Array.new
 	 @bloks[0] = Array.new
@@ -43,6 +44,11 @@ class Level
 	   @drs[0][j] = @bloks[0][i] 
 	   @drs[1][j] = @bloks[1][i] 
 	   j += 1
+	  elsif @bloks[2][i] == "#"
+	   @img_door2.draw_rot(@bloks[0][i]+10, @bloks[1][i]+10, 1, 0)
+	   @drs[0][j] = @bloks[0][i] 
+	   @drs[1][j] = @bloks[1][i] 
+	   j += 1
 	  end
 	   i +=1
 	 end
@@ -51,7 +57,7 @@ class Level
 	def create_doors_array
 	  i = j = 0
 	  while i<@max
-	    if @bloks[2][i] == "="
+	    if @bloks[2][i] == "=" or @bloks[2][i] == "#"
 	     @drs[0][j] = @bloks[0][i] 
 	     @drs[1][j] = @bloks[1][i] 
 	     j += 1
@@ -121,7 +127,7 @@ class Level
 	      elsif key == 2
 	       @bloks[0] << com
 	       @bloks[1] << @n_door_coord[0]
-	       @bloks[2] << "$"
+	       @bloks[2] << "#"
 	       @n_door_coord[3] = "Closed"
 	       change_door_arr(@n_door_coord)
 	      elsif key ==3
@@ -262,13 +268,15 @@ class Level
          j=0
          open(lvl).each {|f|
            while j<32
-                if f[j] == "x" or f[j] == "="
+                if f[j] == "x" or f[j] == "=" or f[j] == "#"
                  bloks[0]<< 20*j
                  bloks[1]<< 20*(i-1)
                  if f[j] == "x"
                   bloks[2]<< "x"
                  elsif f[j] == "="
                   bloks[2]<< "="
+	         elsif f[j] == "#"
+		  bloks[2]<< "#"
                  end
                 end
                 j+=1
