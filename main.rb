@@ -123,9 +123,9 @@ class GameWindow < Gosu::Window
 	   elsif @inv.get_name(@inv.get_num) == "key" 
 	     if @door_txt[0] != ""
 	      if @door_txt[1] == "Closed"
-	       @level.open_door
+	       @level.open_door(1)
 	      else
-	       @level.close_door
+	       @level.close_door(1)
 	      end
 	     end
 	   end

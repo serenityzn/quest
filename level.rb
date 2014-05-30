@@ -60,20 +60,38 @@ class Level
 	  end
 	end
 
-	def open_door
+	def open_door(key) # key=1 door_type1, key=2 door_type2, key=3 door_type3
 	  i = 0
 	  com = 0
 	  while i<@bloks[0].size
 	  com = @n_door_coord[1]
 	   while com <= @n_door_coord[2]
-	    if @bloks[0][i] == com and @bloks[1][i] == @n_door_coord[0] and @bloks[2][i] == "="
+	     if key == 1
+	      if @bloks[0][i] == com and @bloks[1][i] == @n_door_coord[0] and @bloks[2][i] == "="
 		@bloks[2][i] = "+"
 		@bloks[0][i] = -100
 		@bloks[1][i] = -100
 		@n_door_coord[3] = "Opened"
 		change_door_arr(@n_door_coord)
-	    end
-	    com += 20
+	      end
+	     elsif key == 2
+	      if @bloks[0][i] == com and @bloks[1][i] == @n_door_coord[0] and @bloks[2][i] == "#"
+		@bloks[2][i] = "*"
+		@bloks[0][i] = -100
+		@bloks[1][i] = -100
+		@n_door_coord[3] = "Opened"
+		change_door_arr(@n_door_coord)
+	      end
+	     elsif key == 3
+	      if @bloks[0][i] == com and @bloks[1][i] == @n_door_coord[0] and @bloks[2][i] == "$"
+		@bloks[2][i] = "@"
+		@bloks[0][i] = -100
+		@bloks[1][i] = -100
+		@n_door_coord[3] = "Opened"
+		change_door_arr(@n_door_coord)
+	      end
+	     end
+	      com += 20
 	   end
 	   i += 1
 	  end
@@ -89,16 +107,30 @@ class Level
 	  end
 	end
 
-	def close_door
+	def close_door(key)
 	  i =  com = 0
 	  com = @n_door_coord[1]
 	  while i<@bloks[0].size
 	    while com <= @n_door_coord[2]
-	     @bloks[0] << com
-	     @bloks[1] << @n_door_coord[0]
-	     @bloks[2] << "="
-	     @n_door_coord[3] = "Closed"
-	     change_door_arr(@n_door_coord)
+	      if key == 1
+	       @bloks[0] << com
+	       @bloks[1] << @n_door_coord[0]
+	       @bloks[2] << "="
+	       @n_door_coord[3] = "Closed"
+	       change_door_arr(@n_door_coord)
+	      elsif key == 2
+	       @bloks[0] << com
+	       @bloks[1] << @n_door_coord[0]
+	       @bloks[2] << "$"
+	       @n_door_coord[3] = "Closed"
+	       change_door_arr(@n_door_coord)
+	      elsif key ==3
+	       @bloks[0] << com
+	       @bloks[1] << @n_door_coord[0]
+	       @bloks[2] << "$"
+	       @n_door_coord[3] = "Closed"
+	       change_door_arr(@n_door_coord)
+	      end
 	     com += 20
 	    end
 	    i += 1
