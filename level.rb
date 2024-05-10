@@ -240,7 +240,7 @@ class Level
           res[2] = Array.new # x max
           res[3] = Array.new # Open/Closed
           prom = Array.new
-          while y_uniq[i] != NIL
+          while y_uniq[i] != nil
              res[0][i] = y_uniq[i].to_s
              j = 0
              while j<mas[1].size
